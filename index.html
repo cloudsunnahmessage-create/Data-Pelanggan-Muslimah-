@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dasbor Pelanggan Muslimah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdf2f8; /* Latar belakang pink sangat lembut */
+        }
+        .animated-gradient {
+            background-size: 200% 200%;
+            animation: gradient-animation 10s ease infinite;
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .form-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+            font-weight: 600;
+        }
+        .form-input input, .form-input select, .form-input textarea {
+            transition: all 0.2s ease-in-out;
+        }
+        .customer-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .customer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+
+    <!-- Tampilan Login (ditampilkan saat belum login) -->
+    <div id="login-view" class="min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-lg text-center">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17 8C8 10 5.9 16.17 3.82 21.32a1 1 0 0 0 1.35 1.16C7.22 21.57 12 18 17 8z"/>
+                <path d="M17 8c0-3.31-2.69-6-6-6S5 4.69 5 8c0 1.05.27 2.02.74 2.86.17.3.52.4.83.25.31-.15.42-.51.25-.82A5.01 5.01 0 0 1 6 8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5c-.75 0-1.45-.17-2.09-.46-.35-.16-.75.06-.9.41s.06.75.41.9C9.91 13.78 10.91 14 12 14c2.76 0 5-2.24 5-5z"/>
+            </svg>
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Selamat Datang</h1>
+            <p class="text-gray-600 mb-8">Silakan login untuk mengelola data pelanggan Anda.</p>
+            <button id="login-btn" class="w-full flex items-center justify-center bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition-all transform hover:scale-105">
+                <svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#fbc02d" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#e53935" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4caf50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.222,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1565c0" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238	C42.022,35.244,44,30.036,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
+                Masuk dengan Google
+            </button>
+        </div>
+    </div>
+
+    <!-- Konten Aplikasi Utama (ditampilkan setelah login) -->
+    <div id="main-app-content" class="max-w-7xl mx-auto hidden">
+        <!-- Header -->
+        <header class="mb-8">
+            <div class="bg-gradient-to-r from-pink-500 via-red-500 to-purple-600 p-6 rounded-xl shadow-lg text-white animated-gradient">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                    <div class="flex items-center mb-4 sm:mb-0">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.32a1 1 0 0 0 1.35 1.16C7.22 21.57 12 18 17 8z"/>
+                            <path d="M17 8c0-3.31-2.69-6-6-6S5 4.69 5 8c0 1.05.27 2.02.74 2.86.17.3.52.4.83.25.31-.15.42-.51.25-.82A5.01 5.01 0 0 1 6 8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5c-.75 0-1.45-.17-2.09-.46-.35-.16-.75.06-.9.41s.06.75.41.9C9.91 13.78 10.91 14 12 14c2.76 0 5-2.24 5-5z"/>
+                        </svg>
+                        <div>
+                             <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Dasbor Pelanggan Muslimah</h1>
+                             <p class="text-pink-100 mt-2">Platform terpusat untuk mengelola pelanggan berharga Anda.</p>
+                        </div>
+                    </div>
+                     <div id="user-info-container" class="text-sm text-right">
+                        <p id="user-info-display" class="font-semibold"></p>
+                        <button id="logout-btn" class="mt-1 font-bold text-white underline hover:text-pink-200 transition">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Kolom Form Input -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-xl shadow-md sticky top-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tambah Pelanggan Baru</h2>
+                    <form id="customer-form" class="space-y-5">
+                        <div class="form-input">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" class="block w-full px-3 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" required>
+                        </div>
+                        <div class="form-input">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="block w-full px-3 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500" required>
+                        </div>
+                        <div class="form-input">
+                            <label for="status">Status</label>
+                            <select id="status" name="status" class="block w-full px-3 py-3 bg-gray-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 rounded-lg">
+                                <option value="Baru">Baru (28 Hari)</option>
+                                <option value="Trial">Trial (3 Hari)</option>
+                                <option value="Pelanggan Setia">Pelanggan Setia (30 Hari)</option>
+                            </select>
+                        </div>
+                        <div class="form-input">
+                            <label for="notes">Keterangan Singkat</label>
+                            <textarea id="notes" name="notes" rows="3" class="block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 sm:text-sm" placeholder="Keterangan singkat..."></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full bg-pink-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition-transform transform hover:scale-105">
+                                Tambah Pelanggan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Kolom Daftar Pelanggan -->
+            <div class="lg:col-span-2">
+                 <!-- Statistik Jumlah Pelanggan -->
+                <div class="mb-4 bg-white p-4 rounded-xl shadow-md">
+                    <div class="flex items-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.124-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.124-1.283.356-1.857m0 0a3.004 3.004 0 01-3.71-1.32M17 12a3 3 0 11-6 0 3 3 0 016 0zm-3 3a3 3 0 100-6 3 3 0 000 6z" />
+                        </svg>
+                        <h3 class="text-lg font-semibold text-gray-700">Statistik Pelanggan</h3>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                        <div>
+                            <p class="text-sm text-gray-500">Total</p>
+                            <p id="total-count" class="text-2xl font-bold text-pink-600">0</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Baru</p>
+                            <p id="baru-count" class="text-2xl font-bold text-green-600">0</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Trial</p>
+                            <p id="trial-count" class="text-2xl font-bold text-yellow-600">0</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Setia</p>
+                            <p id="setia-count" class="text-2xl font-bold text-blue-600">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fitur Pencarian -->
+                <div class="mb-6 relative">
+                    <input type="text" id="search-input" placeholder="Cari berdasarkan username atau email..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Daftar Pelanggan -->
+                <div id="customer-list" class="space-y-4">
+                    <!-- Data pelanggan akan ditampilkan di sini -->
+                    <div id="loading-indicator" class="text-center p-10">
+                        <p class="text-gray-500">Menunggu login...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Konfirmasi Hapus -->
+    <div id="delete-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+            <h3 class="text-lg font-bold mb-4">Konfirmasi Hapus</h3>
+            <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus pelanggan ini? Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="flex justify-end space-x-3">
+                <button id="cancel-delete" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">Batal</button>
+                <button id="confirm-delete" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Hapus</button>
+            </div>
+        </div>
+    </div>
+
+<script type="module">
+    // --- Impor Firebase ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, onSnapshot, collection, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // --- KONFIGURASI FIREBASE MILIK ANDA ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyDC3-JbEYvcbXWOngB5O3aFlrHcioJJY_o",
+      authDomain: "data-pelanggan-muslimah.firebaseapp.com",
+      projectId: "data-pelanggan-muslimah",
+      storageBucket: "data-pelanggan-muslimah.firebasestorage.app",
+      messagingSenderId: "538349833578",
+      appId: "1:538349833578:web:3b673022f41e66910c6913"
+    };
+
+    // --- Inisialisasi Aplikasi ---
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    // --- Variabel & Elemen DOM ---
+    let userId = null;
+    let allCustomers = [];
+    let countdownIntervals = {};
+    let unsubscribeFromCustomers; // Untuk menghentikan listener saat logout
+
+    const loginView = document.getElementById('login-view');
+    const mainAppContent = document.getElementById('main-app-content');
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const userInfoDisplay = document.getElementById('user-info-display');
+    const userInfoContainer = document.getElementById('user-info-container');
+    const customerForm = document.getElementById('customer-form');
+    const customerList = document.getElementById('customer-list');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const deleteModal = document.getElementById('delete-modal');
+    const cancelDeleteBtn = document.getElementById('cancel-delete');
+    const confirmDeleteBtn = document.getElementById('confirm-delete');
+    const searchInput = document.getElementById('search-input');
+    const totalCountElement = document.getElementById('total-count');
+    const baruCountElement = document.getElementById('baru-count');
+    const trialCountElement = document.getElementById('trial-count');
+    const setiaCountElement = document.getElementById('setia-count');
+    
+    const statusConfig = {
+        'Pelanggan Setia': { days: 30, color: 'border-blue-500', bg: 'bg-blue-100', text: 'text-blue-800' },
+        'Baru': { days: 28, color: 'border-green-500', bg: 'bg-green-100', text: 'text-green-800' },
+        'Trial': { days: 3, color: 'border-yellow-500', bg: 'bg-yellow-100', text: 'text-yellow-800' }
+    };
+
+    // --- Otentikasi & Inisialisasi ---
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            // Pengguna berhasil login
+            userId = user.uid;
+            loginView.classList.add('hidden');
+            mainAppContent.classList.remove('hidden');
+            userInfoDisplay.textContent = user.displayName || user.email;
+            listenForCustomers();
+        } else {
+            // Pengguna logout atau belum login
+            userId = null;
+            if (unsubscribeFromCustomers) {
+                unsubscribeFromCustomers(); // Hentikan listener data
+            }
+            loginView.classList.remove('hidden');
+            mainAppContent.classList.add('hidden');
+            allCustomers = [];
+            displayCustomers(); // Kosongkan tampilan
+            updateStatistics(); // Reset statistik jadi 0
+        }
+    });
+
+    // --- Fungsi Utama ---
+    const handleGoogleLogin = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (error) {
+            console.error("Gagal login dengan Google:", error);
+            if (error.code === 'auth/unauthorized-domain') {
+                alert("Gagal login: Domain tidak diizinkan.\n\nPastikan Anda telah menambahkan domain situs web ini ke bagian 'Authorized domains' di pengaturan Authentication Firebase Anda.");
+            } else {
+                alert("Gagal login dengan Google. Pastikan popup tidak diblokir dan coba lagi.");
+            }
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error("Gagal logout:", error);
+        }
+    };
+
+    function listenForCustomers() {
+        if (!userId) return;
+        const customersCollectionRef = collection(db, "users", userId, "customers");
+        
+        unsubscribeFromCustomers = onSnapshot(customersCollectionRef, (snapshot) => {
+            loadingIndicator.style.display = 'none';
+            allCustomers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            updateStatistics();
+            displayCustomers();
+        }, error => {
+            console.error("Gagal memuat data:", error);
+            loadingIndicator.textContent = 'Gagal memuat data.';
+        });
+    }
+
+    function updateStatistics() {
+        const totalCount = allCustomers.length;
+        const baruCount = allCustomers.filter(c => c.status === 'Baru').length;
+        const trialCount = allCustomers.filter(c => c.status === 'Trial').length;
+        const setiaCount = allCustomers.filter(c => c.status === 'Pelanggan Setia').length;
+
+        totalCountElement.textContent = totalCount;
+        baruCountElement.textContent = baruCount;
+        trialCountElement.textContent = trialCount;
+        setiaCountElement.textContent = setiaCount;
+    }
+
+    function displayCustomers() {
+        customerList.innerHTML = '';
+        Object.values(countdownIntervals).forEach(clearInterval);
+        countdownIntervals = {};
+
+        const searchTerm = searchInput.value.toLowerCase();
+        let filteredCustomers = allCustomers;
+
+        if (searchTerm) {
+            filteredCustomers = allCustomers.filter(customer =>
+                customer.username.toLowerCase().includes(searchTerm) ||
+                customer.email.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        filteredCustomers.sort((a, b) => {
+            const timeLeftA = new Date(a.endDate).getTime() - new Date().getTime();
+            const timeLeftB = new Date(b.endDate).getTime() - new Date().getTime();
+            return timeLeftA - timeLeftB;
+        });
+
+        if (filteredCustomers.length === 0 && allCustomers.length > 0) {
+             customerList.innerHTML = `<p class="text-center text-gray-500 p-4">Tidak ada pelanggan yang cocok dengan pencarian.</p>`;
+        } else if (filteredCustomers.length === 0 && userId) {
+             customerList.innerHTML = `<p class="text-center text-gray-500 p-4">Belum ada data pelanggan. Silakan tambahkan satu!</p>`;
+        } else {
+            loadingIndicator.style.display = 'none';
+        }
+
+
+        filteredCustomers.forEach(customer => {
+            const config = statusConfig[customer.status] || { color: 'border-gray-500', bg: 'bg-gray-100', text: 'text-gray-800' };
+            const card = document.createElement('div');
+            card.className = `customer-card bg-white p-5 rounded-lg shadow-sm border-l-4 ${config.color} flex flex-col sm:flex-row justify-between items-start sm:items-center`;
+            card.innerHTML = `
+                <div class="flex-grow mb-4 sm:mb-0">
+                    <div class="flex items-center mb-2">
+                        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full ${config.bg} ${config.text}">${customer.status}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">${customer.username}</h3>
+                    <p class="text-gray-500">${customer.email}</p>
+                    ${customer.notes ? `<p class="text-sm text-gray-600 mt-2 pt-2 border-t border-gray-200">${customer.notes}</p>` : ''}
+                </div>
+                <div class="text-left sm:text-right w-full sm:w-auto">
+                    <p class="text-sm font-medium text-gray-500">Sisa Waktu:</p>
+                    <p id="countdown-${customer.id}" class="text-2xl font-bold text-gray-700"></p>
+                    <button data-id="${customer.id}" class="delete-btn mt-3 text-gray-400 hover:text-red-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            `;
+            customerList.appendChild(card);
+            startCountdown(customer);
+        });
+    }
+
+    function startCountdown(customer) {
+        const countdownElement = document.getElementById(`countdown-${customer.id}`);
+        if (!countdownElement) return;
+
+        const endDate = new Date(customer.endDate).getTime();
+
+        const update = () => {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+
+            if (distance < 0) {
+                countdownElement.textContent = "WAKTU HABIS";
+                countdownElement.classList.add("text-red-600", "font-extrabold");
+                clearInterval(countdownIntervals[customer.id]);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.textContent = `${days}h : ${hours}j : ${minutes}m : ${seconds}d`;
+
+            if (days < 3) {
+                countdownElement.classList.add("text-red-500");
+            } else {
+                countdownElement.classList.remove("text-red-500");
+            }
+        };
+
+        update();
+        countdownIntervals[customer.id] = setInterval(update, 1000);
+    }
+
+    // --- Event Listeners ---
+    loginBtn.addEventListener('click', handleGoogleLogin);
+    logoutBtn.addEventListener('click', handleLogout);
+
+    customerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!userId) return;
+
+        const username = e.target.username.value;
+        const email = e.target.email.value;
+        const status = e.target.status.value;
+        const notes = e.target.notes.value;
+        const daysToAdd = statusConfig[status].days;
+
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setDate(startDate.getDate() + daysToAdd);
+
+        try {
+            const customersCollectionRef = collection(db, "users", userId, "customers");
+            await addDoc(customersCollectionRef, {
+                username,
+                email,
+                status,
+                notes,
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString()
+            });
+            customerForm.reset();
+        } catch (error) {
+            console.error("Gagal menambahkan pelanggan:", error);
+            alert("Gagal menyimpan data ke database.");
+        }
+    });
+
+    customerList.addEventListener('click', (e) => {
+        const deleteButton = e.target.closest('.delete-btn');
+        if (deleteButton) {
+            const customerId = deleteButton.dataset.id;
+            deleteModal.classList.remove('hidden');
+            confirmDeleteBtn.dataset.id = customerId;
+        }
+    });
+
+    cancelDeleteBtn.addEventListener('click', () => {
+        deleteModal.classList.add('hidden');
+    });
+
+    confirmDeleteBtn.addEventListener('click', async (e) => {
+        const customerId = e.target.dataset.id;
+        if (customerId && userId) {
+            try {
+                const customerDocRef = doc(db, "users", userId, "customers", customerId);
+                await deleteDoc(customerDocRef);
+                deleteModal.classList.add('hidden');
+            } catch (error) {
+                console.error("Gagal menghapus pelanggan:", error);
+                alert("Gagal menghapus data.");
+            }
+        }
+    });
+
+    searchInput.addEventListener('input', displayCustomers);
+
+</script>
+</body>
+</html>
